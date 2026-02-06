@@ -1,0 +1,187 @@
+% TikZ figures (limited palette, ERCOT-style)
+% Use with: \input{tikz/figures_adversarial}
+
+% ----------------------------------------------------------------------
+% 1) Price-Blind Stress Packet Illustration
+% ----------------------------------------------------------------------
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm, font=\small]
+  \draw[very thick] (0,0) -- (14,0);
+  \node[below] at (0,0) {Time};
+
+  \fill[LinkBlue!10] (3,-0.55) rectangle (11,0.55);
+  \draw[thick] (3,-0.55) rectangle (11,0.55);
+
+  \draw[thick] (3,-0.85) -- (3,0.85);
+  \draw[thick] (11,-0.85) -- (11,0.85);
+  \node[above] at (3,0.85) {Stress onset $t_0$};
+  \node[above] at (11,0.85) {Stress end $t_1$};
+
+  \draw[decorate,decoration={brace,amplitude=5pt}] (3,-1.2) -- (11,-1.2);
+  \node[below] at (7,-1.2) {Duration $t_1-t_0$};
+
+  \node[align=left,anchor=west] (cov) at (11.3,0.4) {\textbf{Covariates (price-blind)}\\
+  Weather bin (temp / wind chill)\\
+  Load level / net-load proxy\\
+  Sustained reserve stress\\
+  Persistence / contiguity};
+
+  \draw[-{Latex[length=2mm]}, thick] (10.5,0.3) -- (11.2,0.35);
+
+  \node[align=left,anchor=west] at (0,-2.05) {\textbf{Definition:} Stress packet is defined without prices; prices are analyzed \emph{within} the packet.\\
+  (Axes/terms consistent with Appendix~H definitions.)};
+\end{tikzpicture}
+\caption{Price-blind stress packet illustration: a contiguous stress interval defined by physical triggers (weather/load + reserve stress) with annotated onset, duration, and covariates.}
+\label{fig:price_blind_stress_packet}
+\end{figure}
+
+% ----------------------------------------------------------------------
+% 2) Deployment Re-Entry CDF (conceptual)
+% ----------------------------------------------------------------------
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.88\textwidth,
+  height=0.42\textwidth,
+  xmin=0, xmax=6,
+  ymin=0, ymax=1,
+  axis lines=left,
+  xlabel={Re-entry latency $\rho$ (normalized units)},
+  ylabel={Empirical probability $\Pr(\rho\le x)$},
+  xtick={0,1,2,3,4,5,6},
+  ytick={0,0.25,0.5,0.75,1},
+  grid=both,
+  grid style={draw=black!12},
+  tick label style={font=\small},
+  label style={font=\small},
+  legend style={draw=none, fill=none, font=\small, at={(0.02,0.98)}, anchor=north west},
+]
+
+\addplot[very thick, LinkBlue] coordinates {
+  (0,0) (0.5,0.30) (1.0,0.55) (1.5,0.75) (2.0,0.88) (3.0,0.97) (6.0,1.0)
+};
+\addlegendentry{Strategic withholding (fast re-entry)}
+
+\addplot[very thick, red!70!black, dashed] coordinates {
+  (0,0) (1.0,0.08) (2.0,0.22) (3.0,0.45) (4.0,0.70) (5.0,0.90) (6.0,1.0)
+};
+\addlegendentry{Physical exhaustion (slow re-entry)}
+
+\node[align=left,anchor=south west] at (axis cs:3.2,0.12) {\footnotesize Diagnostic idea:\\
+Left-shifted CDF $\Rightarrow$ rapid re-entry\\
+Right-shifted CDF $\Rightarrow$ prolonged absence};
+
+\end{axis}
+\end{tikzpicture}
+\caption{Conceptual CDF schematic for deployment re-entry latency $\rho$: strategic withholding implies shorter re-entry latencies than physical exhaustion.}
+\label{fig:deployment_reentry_cdf}
+\end{figure}
+
+% ----------------------------------------------------------------------
+% 3) Degradation Envelope (canonical ESR)
+% ----------------------------------------------------------------------
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm, font=\small]
+  \draw[->, thick] (0,0) -- (13.2,0) node[below] {Degradation-cost case $c_{\mathrm{deg}}$};
+  \draw[->, thick] (0,0) -- (0,5.2) node[left, rotate=90] {Revenue proxy $\Pi$};
+
+  \def\xA{2.5}
+  \def\xB{6.5}
+  \def\xC{10.5}
+
+  \fill[LinkBlue!10] (\xA-1,1.2) rectangle (\xA+1,4.2);
+  \draw[thick] (\xA-1,1.2) rectangle (\xA+1,4.2);
+  \draw[thick] (\xA-1,2.0) -- (\xA+1,2.0);
+  \node[below] at (\xA,0) {$0.5\,c_{\mathrm{deg}}^{\mathrm{base}}$};
+
+  \fill[LinkBlue!14] (\xB-1,1.0) rectangle (\xB+1,3.6);
+  \draw[thick] (\xB-1,1.0) rectangle (\xB+1,3.6);
+  \draw[thick] (\xB-1,1.8) -- (\xB+1,1.8);
+  \node[below] at (\xB,0) {$c_{\mathrm{deg}}^{\mathrm{base}}$};
+
+  \fill[LinkBlue!18] (\xC-1,0.6) rectangle (\xC+1,3.0);
+  \draw[thick] (\xC-1,0.6) rectangle (\xC+1,3.0);
+  \draw[thick] (\xC-1,1.4) -- (\xC+1,1.4);
+  \node[below] at (\xC,0) {$2.0\,c_{\mathrm{deg}}^{\mathrm{base}}$};
+
+  \node[left] at (\xA-1,1.2) {$\Pi_{\min}$};
+  \node[left] at (\xA-1,4.2) {$\Pi_{\max}$};
+
+  \draw[black!70, dotted, thick] (0.2,1.2) -- (13.0,1.2) node[right] {P10 zone};
+  \draw[black!70, dotted, thick] (0.2,2.4) -- (13.0,2.4) node[right] {P50 zone};
+  \draw[black!70, dotted, thick] (0.2,3.8) -- (13.0,3.8) node[right] {P90 zone};
+
+  \node[align=left,anchor=west] at (0.4,4.85) {\textbf{Investor risk zones:}\\
+  Downside (P10) sensitive to feasibility truncation\\
+  Median (P50) baseline underwriting\\
+  Upside (P90) tail capture};
+
+\end{tikzpicture}
+\caption{Degradation envelope schematic: revenue proxy envelopes $[\Pi_{\min},\Pi_{\max}]$ under alternate degradation-cost assumptions $c_{\mathrm{deg}}$, with conceptual P10/P50/P90 risk zones.}
+\label{fig:degradation_envelope_schematic}
+\end{figure}
+
+% ----------------------------------------------------------------------
+% 4) Geometry FP/FN Test Matrix
+% ----------------------------------------------------------------------
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}[font=\small]
+  \draw[thick] (0,0) rectangle (10,6);
+  \draw[thick] (5,0) -- (5,6);
+  \draw[thick] (0,3) -- (10,3);
+
+  \node[align=center] at (2.5,6.45) {Geometry \textbf{Low}};
+  \node[align=center] at (7.5,6.45) {Geometry \textbf{High}};
+  \node[align=center,rotate=90] at (-0.65,1.5) {Scarcity \textbf{Absent}};
+  \node[align=center,rotate=90] at (-0.65,4.5) {Scarcity \textbf{Present}};
+
+  \fill[black!6] (0,0) rectangle (5,3);
+  \fill[orange!12] (5,0) rectangle (10,3);
+  \fill[red!10] (0,3) rectangle (5,6);
+  \fill[LinkBlue!12] (5,3) rectangle (10,6);
+
+  \node[align=left] at (2.5,1.5) {\textbf{TN}\\Geometry low,\\Scarcity absent};
+  \node[align=left, text=orange!70!black] at (7.5,1.5) {\textbf{FP}\\Geometry high,\\Scarcity absent\\(``dog didn't bark'')};
+  \node[align=left, text=red!70!black] at (2.5,4.5) {\textbf{FN}\\Geometry low,\\Scarcity present\\(missed stress)};
+  \node[align=left, text=LinkBlue!90!black] at (7.5,4.5) {\textbf{TP}\\Geometry high,\\Scarcity present\\(signal confirmed)};
+
+  \node[align=left,anchor=west] at (0, -0.7) {\footnotesize Diagnostic objective: quantify FP/FN rates under Appendix~H definitions of geometry and scarcity tails.};
+\end{tikzpicture}
+\caption{Geometry false-positive/false-negative diagnostic matrix: geometry state vs scarcity outcome state.}
+\label{fig:geometry_fp_fn_matrix}
+\end{figure}
+
+% ----------------------------------------------------------------------
+% 5) Basis Premium Tail Map (stylized)
+% ----------------------------------------------------------------------
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm, font=\small]
+  \draw[->, thick] (0,0) -- (13.2,0) node[below] {Node / settlement point $n$ (stylized)};
+  \draw[->, thick] (0,-3.0) -- (0,3.2) node[left, rotate=90] {Basis premium $\beta_{n,t}$};
+
+  \draw[black!70, dashed, thick] (0.2,2.0) -- (13.0,2.0) node[right] {$+\tau_{\beta}$ (tail)};
+  \draw[black!70, dashed, thick] (0.2,-2.0) -- (13.0,-2.0) node[right] {$-\tau_{\beta}$ (tail)};
+
+  \foreach \i/\h in {1/0.6,2/1.2,3/2.4,4/0.9,5/-0.8,6/-2.3,7/-1.1,8/0.4,9/1.8,10/2.6,11/-0.5,12/-1.9} {
+    \ifdim \h pt > 0pt
+      \fill[LinkBlue!22] (\i,0) rectangle (\i+0.6,\h);
+      \draw[black!60] (\i,0) rectangle (\i+0.6,\h);
+    \else
+      \fill[red!12] (\i,0) rectangle (\i+0.6,\h);
+      \draw[black!60] (\i,0) rectangle (\i+0.6,\h);
+    \fi
+  }
+
+  \node[align=left,anchor=west] at (0.4,2.55) {\textbf{Upper-tail nodes:}\\$\beta_{n,t} > +\tau_{\beta}$};
+  \node[align=left,anchor=west] at (0.4,-2.75) {\textbf{Lower-tail nodes:}\\$\beta_{n,t} < -\tau_{\beta}$};
+
+  \node[align=left,anchor=west] at (0.4,1.55) {\footnotesize Use with: basis tail frequency and directional skew diagnostics (Appendix~H).};
+\end{tikzpicture}
+\caption{Stylized basis premium tail map: node-level basis premiums $\beta_{n,t}$ with symmetric tail thresholds $\pm\tau_{\beta}$ for nodal basis-risk diagnostics.}
+\label{fig:basis_premium_tail_map}
+\end{figure}

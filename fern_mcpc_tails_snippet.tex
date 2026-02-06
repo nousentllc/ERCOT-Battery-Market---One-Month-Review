@@ -1,0 +1,12 @@
+\subsection{Ancillary price tails during Winter Storm Fern (SCED MCPC)}
+\label{sec:fern_mcpc_tails}
+\noindent\textbf{Data.} ERCOT historical SCED interval MCPC exports for January 2026 (\texttt{HIST\_SCED\_RTM\_MCPC\_2026}), filtered to 5-minute SCED timestamps from 2026-01-22 through 2026-01-29 (inclusive). Products: REGUP, REGDN, RRS, ECRS.
+\par\noindent\textbf{Method.} For each ancillary product $k$, we compute distributional tail statistics over the Fern window: mean, $Q_{0.90}$, $Q_{0.95}$, $Q_{0.99}$, $Q_{0.999}$, and $\max$. We report exceedance rates $\Pr(\mathrm{MCPC}_k>\tau)$ for fixed thresholds $\tau\in\{10,20,50,100,250\}$ \$/MW. For contrast we compute the same metrics over an immediate pre-window (2026-01-15 to 2026-01-21) and immediate post-window (2026-01-30 to 2026-01-31).
+\par\noindent\textbf{Results (Fern window, 2026-01-22 to 2026-01-29).} The Fern window exhibits materially heavier right tails across all products relative to the pre-window. Key tail markers (in \$/MW):
+\par\noindent--- ECRS: mean 2.527, $Q_{0.95}$ 5.00, $Q_{0.99}$ 17.05, $Q_{0.999}$ 343.89, max 399.45.
+\par\noindent--- REGDN: mean 4.356, $Q_{0.95}$ 20.00, $Q_{0.99}$ 25.31, $Q_{0.999}$ 60.20, max 71.75.
+\par\noindent--- REGUP: mean 5.562, $Q_{0.95}$ 26.10, $Q_{0.99}$ 40.00, $Q_{0.999}$ 177.36, max 218.73.
+\par\noindent--- RRS: mean 1.454, $Q_{0.95}$ 2.50, $Q_{0.99}$ 15.06, $Q_{0.999}$ 174.83, max 216.21.
+\par\noindent\textbf{Exceedance rates (Fern window).} Exceedance frequencies above fixed thresholds confirm true tail activation (not just a shift in the median). For example, the rate of intervals with MCPC $>50$ \$/MW is on the order of $0.4\%$--$0.6\%$ across products, with nontrivial mass above $100$ \$/MW and episodic spikes above $250$ \$/MW (ECRS in particular).
+\par\noindent\textbf{Concentration in time.} The largest tail events cluster on 2026-01-28 around 07:10--07:50 (SCED timestamps), with ECRS reaching 399.45 \$/MW and contemporaneous REGUP and RRS spikes above 200 \$/MW. This clustering supports event-study designs centered on storm-driven stress intervals rather than diffuse regime noise.
+\par\noindent\textbf{Interpretation boundary.} This subsection is descriptive: it establishes that ancillary scarcity prices exhibit activated tails during the Fern interval. Mechanistic attribution (e.g., net-load ramps, outages, fuel constraints, or co-optimization feasibility) is treated separately in the interpretation chapter.

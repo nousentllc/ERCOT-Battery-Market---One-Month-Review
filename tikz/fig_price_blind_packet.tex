@@ -1,0 +1,37 @@
+% Price-blind stress packet illustration (limited palette)
+
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm, font=\scriptsize, scale=0.92, transform shape]
+  % Timeline
+  \draw[very thick, black!85] (0,0) -- (14,0);
+  \node[below] at (0,0) {Time};
+
+  % Stress packet window (price-blind)
+  \fill[LinkBlue!12] (3,-0.55) rectangle (11,0.55);
+  \draw[thick, black!75] (3,-0.55) rectangle (11,0.55);
+
+  % Onset / end markers
+  \draw[thick, black!80] (3,-0.85) -- (3,0.85);
+  \draw[thick, black!80] (11,-0.85) -- (11,0.85);
+  \node[above, text=black!85] at (3,0.85) {Stress onset $t_0$};
+  \node[above, text=black!85] at (11,0.85) {Stress end $t_1$};
+
+  % Duration brace
+  \draw[decorate,decoration={brace,amplitude=5pt}, black!80] (3,-1.2) -- (11,-1.2);
+  \node[below, text=black!85] at (7,-1.2) {Duration $t_1-t_0$};
+
+  % Covariates (explicitly price-blind)
+  \node[align=left,anchor=west, text width=3.3cm] (cov) at (11.2,0.45) {\textbf{Covariates (price-blind)}\\
+  Weather bin (temp / wind chill)\\
+  Load level / net-load proxy\\
+  Sustained reserve stress\\
+  Persistence / contiguity};
+  \draw[-{Latex[length=2mm]}, thick, black!70] (10.35,0.20) -- (11.05,0.35);
+
+  % Note that prices are analyzed inside the packet
+  \node[align=left,anchor=west, text width=13.2cm, text=black!80] at (0,-2.05) {\textbf{Interpretation:} Packet selection is driven by physical triggers; pricing is analyzed \emph{within} the packet (not used to select it).};
+\end{tikzpicture}
+\caption{Stress packet visual (price-blind): a contiguous stress interval defined by physical triggers (load and temperature), with annotated onset, duration, and covariates.}
+\label{fig:stress_packet_visual}
+\end{figure}

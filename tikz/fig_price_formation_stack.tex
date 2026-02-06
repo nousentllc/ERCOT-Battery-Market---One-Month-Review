@@ -1,0 +1,76 @@
+% Price Formation Stack Diagram (LMP vs SPP adders vs MCPC)
+
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.88\textwidth,
+  height=0.44\textwidth,
+  ybar stacked,
+  bar width=22pt,
+  ymin=0,
+  ymax=120,
+  axis lines=left,
+  ylabel={Price components (stylized units)},
+  symbolic x coords={Legacy,RTC{+}B},
+  xtick=data,
+  enlarge x limits=0.45,
+  grid=both,
+  grid style={draw=black!12},
+  tick label style={font=\small},
+  label style={font=\small},
+  legend style={draw=none, fill=none, font=\small, at={(0.02,0.98)}, anchor=north west},
+]
+
+% Base: SCED LMP (muted blue)
+\addplot[fill=LinkBlue!25, draw=black!55] coordinates {
+  (Legacy,40) (RTC{+}B,40)
+};
+\addlegendentry{SCED LMP (system lambda + congestion)}
+
+% Middle: RT adders (muted orange)
+\addplot[fill=orange!35, draw=black!55] coordinates {
+  (Legacy,35) (RTC{+}B,0)
+};
+\addlegendentry{Real-Time adders (RTRDPA/ORDC, when applicable)}
+
+% Top: Ancillary scarcity (muted red + hatch pattern)
+\addplot[
+  fill=red!22,
+  draw=black!55,
+  postaction={pattern=north east lines, pattern color=black!45}
+] coordinates {
+  (Legacy,10) (RTC{+}B,55)
+};
+\addlegendentry{Ancillary scarcity (MCPC, can spike independently)}
+
+% Annotation arrows (repositioned to avoid overlap)
+\node[
+  font=\footnotesize,
+  align=left,
+  anchor=west,
+  text=red!55!black,
+  fill=white,
+  draw=black!20,
+  inner sep=2pt
+] at (axis description cs:0.62,0.62)
+{Under RTC{+}B, MCPC can spike\\even when $a^{\mathrm{RT}}=0$};
+\draw[-{Latex[length=2mm]}, thick, red!55!black] (axis cs:RTC{+}B,83) -- (axis description cs:0.60,0.60);
+
+\node[
+  font=\footnotesize,
+  align=left,
+  anchor=west,
+  text=orange!70!black,
+  fill=white,
+  draw=black!20,
+  inner sep=2pt
+] at (axis description cs:0.12,0.55)
+{Legacy narrative:\\scarcity dominated by adders};
+\draw[-{Latex[length=2mm]}, thick, orange!70!black] (axis cs:Legacy,70) -- (axis description cs:0.10,0.53);
+
+\end{axis}
+\end{tikzpicture}
+\caption{Figure 4.1: The RTC+B price stack. Unlike legacy framing where scarcity was often expressed primarily through the energy-side adder channel (orange) in the observed settlement stack, RTC+B allows ancillary scarcity (hatched red; MCPC) to manifest independently when feasibility constraints bind, even when the real-time energy adder component is zero or rare. (Stylized schematic; definitions align with Section~\ref{sec:notation_decomp} and Appendix~H.)}
+\label{fig:rtcb_price_stack}
+\end{figure}

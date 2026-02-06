@@ -1,0 +1,137 @@
+% Stack Geometry Visual (side-by-side supply stacks)
+
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[
+  group style={group size=2 by 1, horizontal sep=1.2cm},
+  width=0.46\textwidth,
+  height=0.42\textwidth,
+  xmin=0, xmax=100,
+  ymin=0, ymax=100,
+  axis lines=left,
+  grid=both,
+  grid style={draw=black!12},
+  tick label style={font=\small},
+  label style={font=\small},
+  xlabel={Awarded / cleared quantity (MW, stylized)},
+  ylabel={Marginal award price (\$/MW-hr, stylized)},
+]
+
+% -----------------------------
+% Panel A: Healthy / broad-based
+% -----------------------------
+\nextgroupplot[
+  title={Panel A: Broad-based (``healthy'') stack},
+]
+
+% A smooth, gradually steepening curve
+\addplot[very thick, LinkBlue] coordinates {
+  (0,5) (10,8) (20,12) (30,18) (40,26) (50,36) (60,48) (70,62) (80,78) (90,92) (100,98)
+};
+
+\node[anchor=north west, align=left, font=\footnotesize, text=LinkBlue!90!black] at (axis cs:2,98)
+{Many blocks\\Low $H_k$\\Small shocks $\Rightarrow$\\small price moves};
+
+% A small demand shock arrow
+\draw[-{Latex[length=2mm]}, thick, LinkBlue!80!black] (axis cs:65,48) -- (axis cs:72,55);
+\node[font=\footnotesize, anchor=west, text=LinkBlue!80!black] at (axis cs:73,55) {$\Delta q$ small};
+
+% -----------------------------
+% Panel B: Fragile / hockey stick
+% -----------------------------
+\nextgroupplot[
+  title={Panel B: Concentrated (``hockey stick'') stack},
+  ylabel={},
+]
+
+% Flat then near-vertical wall
+\addplot[very thick, red!70!black] coordinates {
+  (0,6) (20,6) (40,7) (60,8) (75,10) (85,18) (90,35) (92,55) (94,75) (96,90) (98,98) (100,100)
+};
+
+% Feasibility wall marker
+\draw[orange!70!black, dashed, thick] (axis cs:92,0) -- (axis cs:92,100);
+\node[font=\footnotesize, anchor=south west, align=left, text=orange!70!black] at (axis cs:92.5,12)
+{``Feasibility wall''\\(vertical jump)};
+
+\node[anchor=north west, align=left, font=\footnotesize, text=red!70!black] at (axis cs:2,98)
+{Few blocks\\High $H_k$\\Small shocks $\Rightarrow$\\large price jump};
+
+% Same small demand shock arrow (causes big price move)
+\draw[-{Latex[length=2mm]}, thick, red!70!black] (axis cs:89,35) -- (axis cs:93,75);
+\node[font=\footnotesize, anchor=west, text=red!70!black] at (axis cs:93.2,75) {$\Delta q$ small};
+
+\end{groupplot}
+\end{tikzpicture}
+\caption{Figure 9.1: The evolution of stack geometry. During Fern, the day-ahead ancillary award stack can transition from a robust, gradual slope (left) to a brittle, high-concentration ``hockey stick'' (right), increasing the sensitivity of prices to moderate quantity shocks. This figure illustrates the convexity/concentration logic behind the Herfindahl index $H_k$ used in the stack-shape diagnostics.}
+\label{fig:stack_geometry_evolution}
+\end{figure}% Stack Geometry Visual (side-by-side supply stacks)
+
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[
+  group style={group size=2 by 1, horizontal sep=1.2cm},
+  width=0.46\textwidth,
+  height=0.42\textwidth,
+  xmin=0, xmax=100,
+  ymin=0, ymax=100,
+  axis lines=left,
+  grid=both,
+  grid style={draw=black!12},
+  tick label style={font=\small},
+  label style={font=\small},
+  xlabel={Awarded / cleared quantity (MW, stylized)},
+  ylabel={Marginal award price (\$/MW-hr, stylized)},
+]
+
+% -----------------------------
+% Panel A: Healthy / broad-based
+% -----------------------------
+\nextgroupplot[
+  title={Panel A: Broad-based (``healthy'') stack},
+]
+
+% A smooth, gradually steepening curve
+\addplot[very thick, black] coordinates {
+  (0,5) (10,8) (20,12) (30,18) (40,26) (50,36) (60,48) (70,62) (80,78) (90,92) (100,98)
+};
+
+\node[anchor=north west, align=left, font=\footnotesize] at (axis cs:2,98)
+{Many blocks\\Low $H_k$\\Small shocks $\Rightarrow$\\small price moves};
+
+% A small demand shock arrow
+\draw[-{Latex[length=2mm]}, thick] (axis cs:65,48) -- (axis cs:72,55);
+\node[font=\footnotesize, anchor=west] at (axis cs:73,55) {$\Delta q$ small};
+
+% -----------------------------
+% Panel B: Fragile / hockey stick
+% -----------------------------
+\nextgroupplot[
+  title={Panel B: Concentrated (``hockey stick'') stack},
+  ylabel={},
+]
+
+% Flat then near-vertical wall
+\addplot[very thick, black] coordinates {
+  (0,6) (20,6) (40,7) (60,8) (75,10) (85,18) (90,35) (92,55) (94,75) (96,90) (98,98) (100,100)
+};
+
+% Feasibility wall marker
+\draw[black!70, dashed, thick] (axis cs:92,0) -- (axis cs:92,100);
+\node[font=\footnotesize, anchor=south west, align=left] at (axis cs:92.5,12)
+{``Feasibility wall''\\(vertical jump)};
+
+\node[anchor=north west, align=left, font=\footnotesize] at (axis cs:2,98)
+{Few blocks\\High $H_k$\\Small shocks $\Rightarrow$\\large price jump};
+
+% Same small demand shock arrow (causes big price move)
+\draw[-{Latex[length=2mm]}, thick] (axis cs:89,35) -- (axis cs:93,75);
+\node[font=\footnotesize, anchor=west] at (axis cs:93.2,75) {$\Delta q$ small};
+
+\end{groupplot}
+\end{tikzpicture}
+\caption{Figure 9.1: The evolution of stack geometry. During Fern, the day-ahead ancillary award stack can transition from a robust, gradual slope (left) to a brittle, high-concentration ``hockey stick'' (right), increasing the sensitivity of prices to moderate quantity shocks. This figure illustrates the convexity/concentration logic behind the Herfindahl index $H_k$ used in the stack-shape diagnostics.}
+\label{fig:stack_geometry_evolution}
+\end{figure}
